@@ -3,114 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Merry Christmas & Happy 2026</title>
+    <title>Merry Christmas 2026</title>
     <style>
         body {
             background: linear-gradient(-45deg, #020111, #191654, #050530);
             background-size: 400% 400%;
-            animation: gradient 12s ease infinite;
+            animation: gradient 10s ease infinite;
             height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             margin: 0;
             color: white;
             font-family: 'Segoe UI', sans-serif;
-            text-align: center;
             overflow: hidden;
         }
-
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        #overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .btn {
-            padding: 20px 45px;
-            font-size: 1.4rem;
-            background: #d42426; /* قرمز کریسمسی */
-            color: white;
-            border: 2px solid #fff;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 0 20px rgba(212, 36, 38, 0.6);
-            transition: 0.3s;
-        }
-
-        .btn:hover { transform: scale(1.1); background: #fff; color: #d42426; }
-
-        h1 { font-size: 3.5rem; display: none; margin: 0; text-shadow: 0 0 15px #fff; }
-        p { font-size: 1.5rem; display: none; margin-top: 15px; }
-
-        .emoji {
-            position: absolute;
-            top: -50px;
-            font-size: 2.5rem;
-            animation: fall linear forwards;
-        }
-
-        @keyframes fall {
-            to { transform: translateY(110vh) rotate(360deg); }
-        }
+        @keyframes gradient { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
+        #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+        .btn { padding: 20px 40px; font-size: 1.5rem; background: #d42426; color: white; border: 2px solid #fff; border-radius: 50px; cursor: pointer; font-weight: bold; }
+        h1 { font-size: 3rem; display: none; text-align: center; }
+        .emoji { position: absolute; top: -50px; font-size: 2rem; animation: fall linear forwards; }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
     </style>
 </head>
 <body>
-
     <div id="overlay">
-        <button class="btn" onclick="start()">🎁 CLICK FOR 2026 SURPRISE 🎁</button>
+        <button class="btn" onclick="start()">🎁 OPEN NEW YEAR GIFT 🎁</button>
     </div>
+    <h1 id="msg">Merry Christmas 🎄<br>& Happy 2026! 🎉</h1>
 
-    <div id="content">
-        <h1 id="h1">Merry Christmas 🎄<br>& Happy 2026! 🎉</h1>
-        <p id="p">Wishing you a year full of love and magic!</p>
-    </div>
-
+    <audio id="music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+    </audio>
     <audio id="firework">
         <source src="https://assets.mixkit.co/active_storage/sfx/1001/1001-preview.mp3" type="audio/mpeg">
     </audio>
 
-    <audio id="music" loop>
-        <source src="https://www.chosic.com/wp-content/uploads/2021/11/We-Wish-You-A-Merry-Christmas.mp3" type="audio/mpeg">
-    </audio>
-
     <script>
         function start() {
-            const fw = document.getElementById("firework");
-            const ms = document.getElementById("music");
-
-            // اجرای همزمان صداها
-            fw.play();
-            ms.play().catch(e => console.log("Audio play failed"));
-
+            document.getElementById("firework").play();
+            setTimeout(() => { document.getElementById("music").play(); }, 300);
             document.getElementById("overlay").style.display = "none";
-            document.getElementById("h1").style.display = "block";
-            document.getElementById("p").style.display = "block";
-
-            // انیمیشن بارش
+            document.getElementById("msg").style.display = "block";
             const items = ['❄️', '🎄', '🎁', '🎅', '✨', '🎉'];
             setInterval(() => {
                 const el = document.createElement('div');
-                el.classList.add('emoji');
+                el.className = 'emoji';
                 el.innerText = items[Math.floor(Math.random() * items.length)];
                 el.style.left = Math.random() * 100 + 'vw';
                 el.style.animationDuration = (Math.random() * 2 + 2) + 's';
                 document.body.appendChild(el);
                 setTimeout(() => el.remove(), 4000);
-            }, 250);
+            }, 200);
         }
     </script>
 </body>
