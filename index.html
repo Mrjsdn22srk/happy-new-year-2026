@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy New Year 2026 🎉</title>
+    <title>Happy New Year 2026</title>
     <style>
-        /* این همان کدی است که فرستادی و باعث متحرک شدن رنگ‌ها می‌شود */
+        /* Animated Gradient Background */
         body {
             background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
             background-size: 400% 400%;
@@ -17,7 +17,9 @@
             align-items: center;
             margin: 0;
             color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            text-align: center;
+            overflow: hidden;
         }
 
         @keyframes gradient {
@@ -26,22 +28,109 @@
             100% { background-position: 0% 50%; }
         }
 
+        /* Overlay to enable Audio Playback */
+        #overlay {
+            position: fixed;
+            top: 0; left: 0; 
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.8s ease;
+        }
+
+        /* Modern Button Style */
+        .start-btn {
+            padding: 20px 40px;
+            font-size: 1.2rem;
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .start-btn:hover {
+            background: white;
+            color: #e73c7e;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* Content Animations */
+        #main-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1.5s ease;
+        }
+
         h1 {
-            font-size: 3.5rem;
-            text-shadow: 2px 2px 15px rgba(0,0,0,0.3);
-            margin-bottom: 10px;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            margin: 0;
+            text-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
         p {
-            font-size: 1.5rem;
-            background: rgba(0, 0, 0, 0.1);
-            padding: 10px 20px;
-            border-radius: 50px;
+            font-size: clamp(1rem, 4vw, 1.8rem);
+            margin-top: 20px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 800px;
         }
     </style>
 </head>
 <body>
-    <h1>🎉 Happy New Year 2026 🎉</h1>
-    <p>Wishing you happiness, health, and success!</p>
+
+    <div id="overlay">
+        <button class="start-btn" onclick="initGreeting()">🎁 Open Your Message</button>
+    </div>
+
+    <div id="main-content" class="container">
+        <h1>Happy New Year 2026</h1>
+        <p>May your year be filled with joy, prosperity, and endless possibilities. Shine bright in 2026!</p>
+    </div>
+
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        function initGreeting() {
+            // Start Music
+            const music = document.getElementById('bg-music');
+            music.play().catch(error => console.log("Audio playback waiting for user interaction"));
+
+            // Hide Overlay
+            const overlay = document.getElementById('overlay');
+            overlay.style.opacity = '0';
+            
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                
+                // Show Main Content with Animation
+                const content = document.getElementById('main-content');
+                content.style.display = 'block';
+                
+                // Small delay to trigger CSS transition
+                setTimeout(() => {
+                    content.style.opacity = '1';
+                    content.style.transform = 'translateY(0)';
+                }, 50);
+            }, 800);
+        }
+    </script>
 </body>
 </html>
