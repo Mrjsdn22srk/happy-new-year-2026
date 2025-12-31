@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Merry Christmas & Happy 2026</title>
+    <title>Merry Christmas 2026</title>
     <style>
         body {
             background: linear-gradient(-45deg, #020111, #191654, #050530);
@@ -19,10 +19,10 @@
             overflow: hidden;
         }
         @keyframes gradient { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
-        #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: flex; justify-content: center; align-items: center; z-index: 1000; transition: opacity 0.5s; }
-        .btn { padding: 20px 40px; font-size: 1.5rem; background: #d42426; color: white; border: 2px solid #fff; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 0 20px rgba(212, 36, 38, 0.6); }
+        #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+        .btn { padding: 20px 45px; font-size: 1.5rem; background: #d42426; color: white; border: 2px solid #fff; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 0 20px rgba(212, 36, 38, 0.6); }
         #content { display: none; text-align: center; }
-        h1 { font-size: 3.5rem; text-shadow: 0 0 15px #fff; margin: 0; }
+        h1 { font-size: clamp(2rem, 8vw, 3.5rem); text-shadow: 0 0 15px #fff; margin: 0; }
         .emoji { position: absolute; top: -50px; font-size: 2rem; animation: fall linear forwards; pointer-events: none; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
     </style>
@@ -30,36 +30,39 @@
 <body>
 
     <div id="overlay">
-        <button class="btn" onclick="startExperience()">🎁 OPEN YOUR 2026 GIFT 🎁</button>
+        <button class="btn" onclick="startApp()">🎁 OPEN YOUR 2026 GIFT 🎁</button>
     </div>
 
     <div id="content">
         <h1>Merry Christmas 🎄<br>& Happy 2026! 🎉</h1>
     </div>
 
-    <audio id="music" loop preload="auto">
-        <source src="https://www.chosic.com/wp-content/uploads/2021/11/Jingle-Bells-3.mp3" type="audio/mpeg">
+    <audio id="bgMusic" loop>
+        <source src="https://cdn.pixabay.com/audio/2022/11/22/audio_feb631673d.mp3" type="audio/mpeg">
     </audio>
 
     <script>
-        function startExperience() {
-            const music = document.getElementById("music");
+        function startApp() {
+            const music = document.getElementById("bgMusic");
             const overlay = document.getElementById("overlay");
             const content = document.getElementById("content");
 
-            // تلاش برای پخش موزیک
-            music.play().catch(e => console.log("Audio waiting for user or link error"));
+            // تلاش برای پخش موزیک بلافاصله بعد از کلیک کاربر
+            music.play().then(() => {
+                console.log("Music started successfully");
+            }).catch(error => {
+                console.log("Playback failed, but page will open.");
+            });
 
-            // نمایش حتمی محتوا حتی اگر موزیک لود نشود
             overlay.style.opacity = "0";
             setTimeout(() => {
                 overlay.style.display = "none";
                 content.style.display = "block";
-                startEmojis();
+                createSnow();
             }, 500);
         }
 
-        function startEmojis() {
+        function createSnow() {
             const items = ['❄️', '🎄', '🎁', '🎅', '✨', '🎉'];
             setInterval(() => {
                 const el = document.createElement('div');
@@ -69,7 +72,7 @@
                 el.style.animationDuration = (Math.random() * 2 + 3) + 's';
                 document.body.appendChild(el);
                 setTimeout(() => el.remove(), 5000);
-            }, 250);
+            }, 300);
         }
     </script>
 </body>
