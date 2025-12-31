@@ -72,28 +72,38 @@
 <body>
 
     <div id="overlay">
-        <button class="start-btn" onclick="startFireworks()">✨ Open Your 2026 Surprise ✨</button>
-        <p style="display:block; font-size: 0.9rem; margin-top: 15px;">(Turn on your volume)</p>
+        <button class="start-btn" onclick="startCelebration()">✨ Open 2026 Christmas Surprise ✨</button>
+        <p style="display:block; font-size: 0.9rem; margin-top: 15px; color: #aaa;">(Please turn on your sound)</p>
     </div>
 
-    <h1 id="h1">Happy New Year 2026 🎉</h1>
-    <p id="p">Wishing you a year full of wonders!</p>
+    <h1 id="h1">Merry Christmas & <br>Happy New Year 2026 🎉</h1>
+    <p id="p">Wishing you a year full of magic and joy!</p>
 
     <audio id="fireworkSound">
         <source src="https://assets.mixkit.co/active_storage/sfx/1001/1001-preview.mp3" type="audio/mpeg">
     </audio>
 
+    <audio id="christmasMusic" loop>
+        <source src="https://www.chosic.com/wp-content/uploads/2021/11/Jingle-Bells-3.mp3" type="audio/mpeg">
+    </audio>
+
     <script>
-        function startFireworks() {
-            const audio = document.getElementById("fireworkSound");
-            audio.play();
+        function startCelebration() {
+            // پخش صدای آتش‌بازی و موزیک
+            const firework = document.getElementById("fireworkSound");
+            const music = document.getElementById("christmasMusic");
+            
+            firework.play();
+            setTimeout(() => {
+                music.play();
+            }, 500); // شروع موزیک نیم ثانیه بعد از انفجار
 
             document.getElementById("overlay").style.display = "none";
             document.getElementById("h1").style.display = "block";
             document.getElementById("p").style.display = "block";
 
-            // ایجاد افکت بارشی استیکرها
-            const emojis = ['🎉', '🎆', '✨', '🎊', '🥳', '🔥', '🎇'];
+            // افکت بارش استیکرها
+            const emojis = ['🎉', '🎆', '🎄', '🎁', '🎅', '✨', '❄️'];
             setInterval(() => {
                 const emoji = document.createElement('div');
                 emoji.classList.add('emoji');
