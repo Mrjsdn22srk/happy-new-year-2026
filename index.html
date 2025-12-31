@@ -20,42 +20,39 @@
         }
         @keyframes gradient { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
         #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: flex; justify-content: center; align-items: center; z-index: 1000; }
-        .btn { padding: 20px 40px; font-size: 1.5rem; background: #d42426; color: white; border: 2px solid #fff; border-radius: 50px; cursor: pointer; font-weight: bold; }
-        h1 { font-size: 3rem; display: none; text-align: center; }
+        .btn { padding: 20px 40px; font-size: 1.5rem; background: #d42426; color: white; border: 2px solid #fff; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 0 20px rgba(212, 36, 38, 0.6); }
+        h1 { font-size: 3rem; display: none; text-align: center; text-shadow: 0 0 15px #fff; }
         .emoji { position: absolute; top: -50px; font-size: 2rem; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
     </style>
 </head>
 <body>
     <div id="overlay">
-        <button class="btn" onclick="start()">🎁 OPEN NEW YEAR GIFT 🎁</button>
+        <button class="btn" onclick="start()">🎁 OPEN YOUR CHRISTMAS GIFT 🎁</button>
     </div>
-    <h1 id="msg">Merry Christmas 🎄<br>& Happy 2026! 🎉</h1>
+    
+    <div id="content" style="text-align: center;">
+        <h1 id="msg">Merry Christmas 🎄<br>& Happy 2026! 🎉</h1>
+    </div>
 
-    <audio id="music" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="firework">
-        <source src="https://assets.mixkit.co/active_storage/sfx/1001/1001-preview.mp3" type="audio/mpeg">
+    <audio id="christmasMusic" loop>
+        <source src="https://www.chosic.com/wp-content/uploads/2021/11/Jingle-Bells-3.mp3" type="audio/mpeg">
     </audio>
 
     <script>
         function start() {
-            document.getElementById("firework").play();
-            setTimeout(() => { document.getElementById("music").play(); }, 300);
+            // پخش موزیک کریسمس
+            const music = document.getElementById("christmasMusic");
+            music.play().catch(e => console.log("Playback failed"));
+
+            // نمایش متن و حذف دکمه
             document.getElementById("overlay").style.display = "none";
             document.getElementById("msg").style.display = "block";
+
+            // بارش استیکرهای کریسمس
             const items = ['❄️', '🎄', '🎁', '🎅', '✨', '🎉'];
             setInterval(() => {
                 const el = document.createElement('div');
                 el.className = 'emoji';
                 el.innerText = items[Math.floor(Math.random() * items.length)];
-                el.style.left = Math.random() * 100 + 'vw';
-                el.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                document.body.appendChild(el);
-                setTimeout(() => el.remove(), 4000);
-            }, 200);
-        }
-    </script>
-</body>
-</html>
+                el.
