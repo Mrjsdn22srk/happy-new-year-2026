@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy New Year 2026</title>
+    <title>Happy New Year 2026 🎉</title>
     <style>
-        /* Animated Gradient Background */
         body {
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e);
             background-size: 400% 400%;
             animation: gradient 15s ease infinite;
             height: 100vh;
@@ -17,7 +16,7 @@
             align-items: center;
             margin: 0;
             color: white;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             text-align: center;
             overflow: hidden;
         }
@@ -28,108 +27,86 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Overlay to enable Audio Playback */
         #overlay {
             position: fixed;
-            top: 0; left: 0; 
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            transition: opacity 0.8s ease;
         }
 
-        /* Modern Button Style */
-        .start-btn {
-            padding: 20px 40px;
-            font-size: 1.2rem;
-            background: transparent;
-            color: white;
-            border: 2px solid white;
+        button {
+            padding: 15px 40px;
+            font-size: 1.3rem;
+            background: #ffcc33;
+            border: none;
             border-radius: 50px;
             cursor: pointer;
+            color: #000;
             font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.3s;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 30px rgba(255, 204, 51, 0.6);
+            transition: 0.3s;
         }
 
-        .start-btn:hover {
-            background: white;
-            color: #e73c7e;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
-            transform: scale(1.05);
+        button:hover { transform: scale(1.1); background: #fff; }
+
+        h1 { font-size: 4rem; margin: 0; z-index: 10; text-shadow: 0 0 20px #fff; }
+        p { font-size: 1.5rem; margin-top: 20px; z-index: 10; opacity: 0.9; }
+
+        /* Animation for falling emojis */
+        .emoji {
+            position: absolute;
+            top: -50px;
+            font-size: 2rem;
+            animation: fall linear forwards;
+            z-index: 5;
         }
 
-        /* Content Animations */
-        #main-content {
-            display: none;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1.5s ease;
-        }
-
-        h1 {
-            font-size: clamp(2.5rem, 8vw, 5rem);
-            margin: 0;
-            text-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        p {
-            font-size: clamp(1rem, 4vw, 1.8rem);
-            margin-top: 20px;
-            font-weight: 300;
-            letter-spacing: 1px;
-            opacity: 0.9;
-        }
-
-        .container {
-            padding: 20px;
-            max-width: 800px;
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
         }
     </style>
 </head>
 <body>
 
     <div id="overlay">
-        <button class="start-btn" onclick="initGreeting()">🎁 Open Your Message</button>
+        <button onclick="celebrate()">🎁 Open Your 2026 Surprise</button>
     </div>
 
-    <div id="main-content" class="container">
-        <h1>Happy New Year 2026</h1>
-        <p>May your year be filled with joy, prosperity, and endless possibilities. Shine bright in 2026!</p>
+    <div id="content" style="display:none;">
+        <h1>Happy New Year 2026 🎉</h1>
+        <p>May your year be as bright as these fireworks! ✨</p>
     </div>
 
-    <audio id="bg-music" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    <audio id="fireworkSound">
+        <source src="https://assets.mixkit.co/active_storage/sfx/1001/1001-preview.mp3" type="audio/mpeg">
     </audio>
 
     <script>
-        function initGreeting() {
-            // Start Music
-            const music = document.getElementById('bg-music');
-            music.play().catch(error => console.log("Audio playback waiting for user interaction"));
+        function celebrate() {
+            // پخش صدای آتش‌بازی
+            const audio = document.getElementById("fireworkSound");
+            audio.play();
 
-            // Hide Overlay
-            const overlay = document.getElementById('overlay');
-            overlay.style.opacity = '0';
-            
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                
-                // Show Main Content with Animation
-                const content = document.getElementById('main-content');
-                content.style.display = 'block';
-                
-                // Small delay to trigger CSS transition
-                setTimeout(() => {
-                    content.style.opacity = '1';
-                    content.style.transform = 'translateY(0)';
-                }, 50);
-            }, 800);
+            // نمایش متن اصلی
+            document.getElementById("overlay").style.display = "none";
+            document.getElementById("content").style.display = "block";
+
+            // ایجاد استیکرهای بارشی
+            const emojis = ['🎉', '✨', '🎆', '🎊', '🥳', '🔥'];
+            setInterval(() => {
+                const emoji = document.createElement('div');
+                emoji.classList.add('emoji');
+                emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                emoji.style.left = Math.random() * 100 + 'vw';
+                emoji.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                document.body.appendChild(emoji);
+
+                // حذف استیکر بعد از اتمام انیمیشن برای سنگین نشدن صفحه
+                setTimeout(() => emoji.remove(), 5000);
+            }, 300);
         }
     </script>
 </body>
