@@ -19,9 +19,10 @@
             overflow: hidden;
         }
         @keyframes gradient { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
-        #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: flex; justify-content: center; align-items: center; z-index: 1000; }
+        #overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: flex; justify-content: center; align-items: center; z-index: 1000; transition: 0.5s; }
         .btn { padding: 20px 45px; font-size: 1.5rem; background: #d42426; color: white; border: 2px solid #fff; border-radius: 50px; cursor: pointer; font-weight: bold; box-shadow: 0 0 20px rgba(212, 36, 38, 0.6); }
-        #content { display: none; text-align: center; }
+        #content { display: none; text-align: center; animation: fadeIn 2s; }
+        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
         h1 { font-size: clamp(2rem, 8vw, 3.5rem); text-shadow: 0 0 15px #fff; margin: 0; }
         .emoji { position: absolute; top: -50px; font-size: 2rem; animation: fall linear forwards; pointer-events: none; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
@@ -38,7 +39,8 @@
     </div>
 
     <audio id="bgMusic" loop>
-        <source src="https://cdn.pixabay.com/audio/2022/11/22/audio_feb631673d.mp3" type="audio/mpeg">
+        <source src="https://actions.google.com/sounds/v1/ambiences/christmas_eve.ogg" type="audio/ogg">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
     </audio>
 
     <script>
@@ -47,22 +49,28 @@
             const overlay = document.getElementById("overlay");
             const content = document.getElementById("content");
 
-            // تلاش برای پخش موزیک بلافاصله بعد از کلیک کاربر
-            music.play().then(() => {
-                console.log("Music started successfully");
-            }).catch(error => {
-                console.log("Playback failed, but page will open.");
-            });
+            // تلاش برای پخش
+            music.volume = 0.7;
+            let playPromise = music.play();
 
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    console.log("Music Playing!");
+                }).catch(error => {
+                    console.log("Auto-play prevented or source error");
+                });
+            }
+
+            // باز کردن صفحه تحت هر شرایطی
             overlay.style.opacity = "0";
             setTimeout(() => {
                 overlay.style.display = "none";
                 content.style.display = "block";
-                createSnow();
+                createCelebration();
             }, 500);
         }
 
-        function createSnow() {
+        function createCelebration() {
             const items = ['❄️', '🎄', '🎁', '🎅', '✨', '🎉'];
             setInterval(() => {
                 const el = document.createElement('div');
